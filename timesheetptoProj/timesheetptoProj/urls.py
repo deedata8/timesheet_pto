@@ -15,9 +15,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from timesheetApp import urls
+#from timesheetApp import urls
+#from pagesApp import urls
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('timesheet/', include('timesheetApp.urls')),
+    path('', include('pagesApp.urls')),
 ]

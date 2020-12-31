@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 from pathlib import Path
+import os
+from . import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -58,7 +60,7 @@ ROOT_URLCONF = 'timesheetptoProj.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['timesheetApp/templates'],
+        'DIRS': ['templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -87,7 +89,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'timesheet_pto',
         'USER': 'postgres',
-        'PASSWORD': 'dee139139',
+        'PASSWORD': config.postgres_pw,
         'HOST': 'localhost'
         #'HOST': '127.0.0.1',
         #'PORT': '5432',
@@ -131,4 +133,10 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
+#when deploying, the host will collect all static files into one dir
+#run python manage.py collectstatic to see this happen 
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'pagesApp/static')
+]
