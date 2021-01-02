@@ -1,0 +1,94 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Static Example</title>
+  <style>body {font-family: Arial, sans-serif;}</style>
+
+  <link rel="stylesheet" type="text/css" href="{% static 'timesheetApp/static/style.css' %}">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+
+  <!-- Fengyuan Chen's Datepicker -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.min.css" integrity="sha256-b88RdwbRJEzRx95nCuuva+hO5ExvXXnpX+78h8DjyOE=" crossorigin="anonymous" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.min.js" integrity="sha256-/7FLTdzP6CfC1VBAj/rsp3Rinuuu9leMRGd354hvk0k=" crossorigin="anonymous"></script>
+
+</head>
+<body>
+
+<form action="{% url 'timesheetApp:timesheet-entry' %}" autocomplete="off">
+  <input id="datepicker" name="date">
+  <input type="submit">
+</form>
+
+<div class="">
+  <div class="">
+    <table style="float: left; padding-top: 100.0px;">
+        <tr>
+            <th>Hourse Worked</th>
+        </tr>
+        <tr>
+            <th>PTO Used</th>
+        </tr>
+    </table>
+  </div>
+  <div class="">
+    <form action="{% url 'timesheetApp:pto-summary' %}" method="POST">
+        {% csrf_token %}
+        <table>
+            <tr>
+              {% for wd in weekday_list %}
+              <th>{{ wd }}</th>
+              {% endfor %}
+            </tr>          
+            <tr>
+              {% for md in month_day_list %}
+              <th>{{ md }}</th>
+              {% endfor %}
+            </tr>
+            <tr>
+              {% for hrs in wk_hrs %}
+              <td><input value="{{hrs}}" readonly></td>
+              {% endfor %}
+            </tr>
+            <tr>
+                {% for hrs in pto_hrs %}
+                <td><input value="{{hrs}}" readonly></td>
+                {% endfor %}
+            </tr>
+        </table>
+
+      <div>
+        <h1>Total Hours Worked: {{tot_wk_hrs}}</h1>
+      </div>
+      <br>
+      <div>
+        <h1>Total Hours PTO: {{tot_pto_hrs}}</h1>
+      </div>
+        
+      <div>
+        <h5>Submit Timesheet</h5>
+        <input type="submit">        
+      </div>  
+    </form>
+
+
+  </div>
+</div>
+
+
+
+  <script>
+    $(function () {
+      $("#datepicker").datepicker();
+    });
+
+  
+  </script>
+
+</body>
+</html>

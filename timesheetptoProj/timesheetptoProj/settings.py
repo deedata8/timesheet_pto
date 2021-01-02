@@ -40,8 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'timesheetApp',
-    'ptoApp',
-    'pagesApp',
+    'accounts',
+    'web_layoutApp'
 
 ]
 
@@ -138,5 +138,5 @@ STATIC_URL = '/static/'
 #when deploying, the host will collect all static files into one dir
 #run python manage.py collectstatic to see this happen 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'pagesApp/static')
+    os.path.join(BASE_DIR, ''),
 ]
