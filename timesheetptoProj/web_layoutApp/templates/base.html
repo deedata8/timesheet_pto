@@ -62,17 +62,30 @@
                 <a class="nav-link" href="about.html">About</a>
               </li>
               <li class="nav-item mr-3">
-                <a class="nav-link" href="listings.html">Featured Listings</a>
+                <a class="nav-link" href="{% url 'timesheetApp:timesheet-index' %}">Timesheet/PTO</a>
               </li>
             </ul>
     
             <ul class="navbar-nav ml-auto">
-              <li class="nav-item mr-3">
-                <a class="nav-link" href="register.html">
+              <!-- add conditional presentation to list item -->
+                <li
+                    {% if 'register' in request.path %}
+                        class="nav-item active mr-3"
+                    {% else %}
+                        class="nav-item mr-3"
+                    {% endif %}
+                >
+                <a class="nav-link" href="{% url 'accounts:register' %}">
                   <i class="fas fa-user-plus"></i> Register</a>
-              </li>
-              <li class="nav-item mr-3">
-                <a class="nav-link" href="login.html">
+                </li>
+                <li
+                    {% if 'login' in request.path %}
+                        class="nav-item active mr-3"
+                    {% else %}
+                        class="nav-item mr-3"
+                    {% endif %}
+                >
+                <a class="nav-link" href="{% url 'accounts:login' %}">
                   <i class="fas fa-sign-in-alt"></i>
     
                   Login</a>
