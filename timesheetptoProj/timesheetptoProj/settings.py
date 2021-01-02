@@ -60,7 +60,7 @@ ROOT_URLCONF = 'timesheetptoProj.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['templates'],
+        'DIRS': ['templates', 'web_layoutApp/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -138,5 +138,18 @@ STATIC_URL = '/static/'
 #when deploying, the host will collect all static files into one dir
 #run python manage.py collectstatic to see this happen 
 STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'web_layoutApp/static'),
     os.path.join(BASE_DIR, ''),
 ]
+
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+# MEDIA_URL = '/media/'
+
+#Messages is a default app configured in django
+from django.contrib.messages import constants as messages
+MESSAGE_TAGS = {
+    messages.ERROR: 'danger'
+}
+
+#where to redirect logged in user
+LOGIN_REDIRECT_URL = '/accounts/dashboard'
