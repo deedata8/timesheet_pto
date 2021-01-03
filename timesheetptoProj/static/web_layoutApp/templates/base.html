@@ -68,28 +68,34 @@
     
             <ul class="navbar-nav ml-auto">
               <!-- add conditional presentation to list item -->
-                <li
-                    {% if 'register' in request.path %}
-                        class="nav-item active mr-3"
-                    {% else %}
-                        class="nav-item mr-3"
-                    {% endif %}
-                >
-                <a class="nav-link" href="{% url 'accounts:register' %}">
-                  <i class="fas fa-user-plus"></i> Register</a>
+              {% if user.is_authenticated %}
+                <h1>HELLO</h1>
+              {% else %}
+          
+                  <li
+                      {% if 'register' in request.path %}
+                          class="nav-item active mr-3"
+                      {% else %}
+                          class="nav-item mr-3"
+                      {% endif %}
+                  >
+                  <a class="nav-link" href="{% url 'accounts:register' %}">
+                    <i class="fas fa-user-plus"></i> Register</a>
+                  </li>
+                  <li
+                      {% if 'login' in request.path %}
+                          class="nav-item active mr-3"
+                      {% else %}
+                          class="nav-item mr-3"
+                      {% endif %}
+                  >
+                  <a class="nav-link" href="{% url 'accounts:login' %}">
+                    <i class="fas fa-sign-in-alt"></i>
+      
+                    Login</a>
                 </li>
-                <li
-                    {% if 'login' in request.path %}
-                        class="nav-item active mr-3"
-                    {% else %}
-                        class="nav-item mr-3"
-                    {% endif %}
-                >
-                <a class="nav-link" href="{% url 'accounts:login' %}">
-                  <i class="fas fa-sign-in-alt"></i>
-    
-                  Login</a>
-              </li>
+              
+              {% endif %}
             </ul>
           </div>
         </div>

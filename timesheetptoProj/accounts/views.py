@@ -7,18 +7,21 @@ from django.contrib.auth.forms import UserCreationForm
 
 #messages.error(req, 'TESTING MESSAGE')
 
-def login(req, context={}):
-    # if context != {}:
-    #     #display message in login box
-    #     return render(req, 'login.html', context)
-    if req.method == 'POST':
-        print('LOGIN POST')
-    else:
-        pass
-    return render(req, 'registration/login.html')
+# def login(req, context={}):
+#     # if context != {}:
+#     #     #display message in login box
+#     #     return render(req, 'login.html', context)
+#     if req.method == 'POST':
+#         print('LOGIN POST')
+#     else:
+#         pass
+#     return render(req, 'registration/login.html')
 
-def logout(req):
-    return render(req, 'registration/index.html')
+# def logout(req):
+#     return render(req, 'registration/index.html')
+
+def index(req):
+    return render(req, 'home.html')
 
 def dashboard(req):
     return render(req, 'dashboard.html')

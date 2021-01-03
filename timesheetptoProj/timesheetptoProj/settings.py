@@ -151,5 +151,7 @@ MESSAGE_TAGS = {
     messages.ERROR: 'danger'
 }
 
-#where to redirect logged in user
+#where to redirect to url address as logged in user
 LOGIN_REDIRECT_URL = '/accounts/dashboard'
+#where to redirect to url address as logged out user
+LOGOUT_REDIRECT_URL = '/accounts/index'
