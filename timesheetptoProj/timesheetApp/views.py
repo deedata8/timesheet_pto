@@ -12,6 +12,7 @@ def index(req):
 def entry(req):
     return render(req, 'set_date.html')
 
+#Ref in calendar widget. Get date from date picker, and generate daily timesheet dates
 @login_required
 def get_timesheet(req):
     input = str(req.GET["date"])
@@ -20,12 +21,12 @@ def get_timesheet(req):
         wkdy_list, md_list = get_week(input)
     else:
         return render(req, 'set_date.html')
-
+    #got to timesheet entry template
     return render(req, 'set_date.html', 
         {'weekday_list': wkdy_list, 'month_day_list': md_list})
 
 
-#display timesheet for review and submit [to admin] for approval
+#display timesheet for review and update OR submit [to admin] for approval
 @login_required
 def timesheet_review(req):
     #headers

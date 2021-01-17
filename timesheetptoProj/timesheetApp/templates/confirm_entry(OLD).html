@@ -57,14 +57,14 @@
               {% endfor %}
             </tr>
             <tr>
-                {% for hrs in pto_hrs %}
-                <td><input value="{{hrs}}" readonly></td>
-                {% endfor %}
+              {% for hrs in pto_hrs %}
+              <td><input value="{{hrs}}" readonly name="pto_hrs_list"></td>
+              {% endfor %}
             </tr>
         </table>
 
       <div>
-        <h1>Total Hours Worked: {{tot_wk_hrs}}</h1>
+        <h1>Total Hours Worked: {{tot_wk_hrs}}</h1> 
       </div>
       <br>
       <div>
@@ -74,10 +74,10 @@
       <div>
         <h5>Edit Timesheet</h5>
         <input type="button" id="editButton" value="Edit"></input>       
-      </div>  
+      </div>   
         
       <div>
-        <h5>Submit Timesheet</h5>
+        <h5>Submit Timesheet For Approval</h5>
         <input type="submit">        
       </div>  
     </form>
@@ -97,6 +97,8 @@
         $('input:text[readonly]').each(function () { $(this).removeAttr('readonly'); }); 
       });
     });
+
+    
   </script>
 
 </body>
