@@ -6,44 +6,36 @@
 <!-- <script type="text/javascript" src="http://code.jquery.com/jquery-1.4.2.min.js"></script>
 <script type="text/javascript" src="http://github.com/sauerc/jAutoCalc/raw/master/jAutoCalc.js"></script>
 <script type="text/javascript">
-<!--
+
 	$(document).ready(function() {
 		$('form[name=cart] tr[name=line_items]').jAutoCalc({keyEventsFire: true, decimalPlaces: 2});
 		$('form[name=cart]').jAutoCalc({decimalPlaces: 2});
 
 	});
 //-->
-</script> -->
+</script> 
 <form name="cart">
 <table name="cart">
 	<tr name="line_items">
-		<th>Item</th>
+		<th>Category</th>
 		<th>Qty</th>
-		<th>Price</th>
+		<th>{date}</th>
 		<th>&nbsp;</th>
-		<th>Item Total</th>
+		<th>Total Hours</th>
 	</tr>
 	<tr name="line_items">
-		<td>Stuff</td>
+		<td>Work</td>
 		<td><input type="text" name="qty" value="1"></td>
 		<td><input type="text" name="price" value="9.99"></td>
 		<td>&nbsp;</td>
 		<td><input type="text" name="item_total" value="" jAutoCalc="{qty} * {price}"></td>
 	</tr>
 	<tr name="line_items">
-		<td>More Stuff</td>
+		<td>PTO</td>
 		<td><input type="text" name="qty" value="2"></td>
 		<td><input type="text" name="price" value="12.50"></td>
 		<td>&nbsp;</td>
 		<td><input type="text" name="item_total" value="" jAutoCalc="{qty} * {price}"></td>
-	</tr>
-	<tr name="line_items">
-		<td>And More Stuff</td>
-		<td><input type="text" name="qty" value="3"></td>
-		<td><input type="text" name="price" value="99.99"></td>
-		<td>&nbsp;</td>
-		<td><input type="text" name="item_total" value="" jAutoCalc="{qty} * {price}"></td>
-	</tr>
 	<tr>
 		<td colspan="2">&nbsp;</td>
 		<td>Subtotal</td>

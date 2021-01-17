@@ -13,7 +13,6 @@
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 
   <!-- Fengyuan Chen's Datepicker -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.min.css" integrity="sha256-b88RdwbRJEzRx95nCuuva+hO5ExvXXnpX+78h8DjyOE=" crossorigin="anonymous" />
@@ -21,73 +20,84 @@
 
 </head>
 <body>
-
+<!-- Calendar Widget -->
 <form action="{% url 'timesheetApp:timesheet-entry' %}" autocomplete="off">
   <input id="datepicker" name="date">
-  <input type="submit">
+  <input type="submit" value="Enter Date">
 </form>
 
-<div class="container">
-    <table style="float: left; padding-top: 45.0px;">
-        <tr>
-            <th>Hourse Worked</th>
-        </tr>
-        <tr>
-            <th>PTO Used</th>
-        </tr>
-    </table>
-    <!-- <form action="{% url 'timesheetApp:timesheet-review' %}" autocomplete="off" method="POST" onsubmit="show_form()"> -->
-    <form autocomplete="off" method="" id="hrs-form">
-        {% csrf_token %}
-        <table>
-            <tr>
-                {% for wd in weekday_list %}
-                <!-- <th>{{ wd }}</th> -->
-                <th><input class="heading" type="text" value="{{wd}}" name="weekday_list" readonly></th>
-                {% endfor %}
-            </tr>
-            <tr>
-                {% for md in month_day_list %}
-                <!-- <th>{{ md }}</th> -->
-                <th><input class="heading" type="text" value="{{md}}" name="month_day_list" readonly></th>
-                {% endfor %}
-            </tr>
-            <tr>
-                {% for md in month_day_list %}
-                <td><input type="number" step="0.01" value="0" name="hrs_worked" min="0" max="24" class="enter_wk"></td>
-                {% endfor %}
-            </tr>
-            <tr id="pto-hrs">
-                {% for md in month_day_list %}
-                <td><input type="number"step="0.01" value="0" name="hrs_pto" min="0" max="8" class="enter_pto"></td>
-                {% endfor %}
-            </tr>
-        </table>
-        <!-- <input type="submit" value="Review Timesheet"> -->
-    </form>
+<!-- Timesheet -->
+<form autocomplete="off" method="">
+  {% csrf_token %}
+<table name="">
+	<tr name="line_items">
+    <th>Date</th>
+    {% for wd in weekday_list %}
+    <th>{{wd}}</th>
+    {% endfor %}
+		<th>&nbsp;</th>
+		<th></th>
+  </tr>
+  <tr name="line_items">
+		<th>Category</th>
+    {% for md in month_day_list %}
+    <th>{{md}}</th>
+    {% endfor %}
+		<th>&nbsp;</th>
+		<th>Total Hours</th>
+	</tr>
+	<tr name="line_items">
+    <td>Work</td>
+    {% for md in month_day_list %}
+    <td><input type="number" step="0.25" value="0" name="hrs_worked" min="0" max="16" class="enter_wk"></td>
+    {% endfor %}    
+    <td>&nbsp;</td>
+		<td><input type="number" name="" value="" class="tot_wk_hrs" readonly></td>
+	</tr>
+	<tr name="line_items">
+    <td>PTO</td>
+    {% for md in month_day_list %}
+    <td><input type="number"step="0.25" value="0" name="hrs_pto" min="0" max="8" class="enter_pto"></td>
+    {% endfor %}  
+		<td>&nbsp;</td>
+		<td><input type="number" name="" value="" class="tot_pto_hrs" readonly></td>
+	<tr>
+		<td colspan="7">&nbsp;</td>
+		<td>Subtotal</td>
+		<td>&nbsp;</td>
+		<td><input type="number" name="subtotal" value="" class="" step="0.25" readonly></td>
+	</tr>
+	<tr>
+		<td colspan="7">&nbsp;</td>
+		<td>
+			Tax:
+			<select name="tax">
+				<option value=".06">CT Tax</option>
+				<option value=".00">Tax Free</option>
+			</select>
+		</td>
+		<td>&nbsp;</td>
+		<td><input type="text" name="tax_total" value="" jAutoCalc="{sub_total} * {tax}"></td>
+	</tr>
+	<tr>
+		<td colspan="7">&nbsp;</td>
+		<td>Total</td>
+		<td>&nbsp;</td>
+		<td><input type="text" name="grand_total" value="" jAutoCalc="{sub_total} + {tax_total}"></td>
+	</tr>
+</table>
+</form>
 
-    <div>
-       <!-- <h4>Total Hours Worked: {{tot_wk_hrs}}</h4> -->
-      <h4>Total Hours Worked: <p class="tot_wk_hrs"></p></h4> 
-    </div>
-    <br>
-    <div>
-      <!-- <h4>Total Hours PTO: {{tot_pto_hrs}}</h4> -->
-      <h4>Total Hours PTO: <p class="tot_pto_hrs"></p></h4> 
-    </div> 
-
-
-</div>
-
+<!-- Bring up modal -->
 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter" onclick="display_inputs()">
-  Launch demo modal
+  Review Timesheet
 </button>
 
 
 
 <!-- MODAL -->
 <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
     <div class="modal-content">
 
       <div class="modal-header">
@@ -97,65 +107,78 @@
         </button>
       </div>
       
-      
       <div class="modal-body">
-        <div class="">
-          <div class="">
-            <table style="float: left; padding-top: 100.0px;">
-                <tr>
-                    <th>Hourse Worked</th>
-                </tr>
-                <tr>
-                    <th>PTO Used</th>
-                </tr>
-            </table>
-          </div>
-          <div class="">
-            <form action="{% url 'timesheetApp:pto-summary' %}" method="POST" id="review-form">
-                {% csrf_token %}
-                <table>
-                    <tr>
-                      {% for wd in weekday_list %}
-                      <th>{{ wd }}</th>
-                      {% endfor %}
-                    </tr>          
-                    <tr>
-                      {% for md in month_day_list %}
-                      <th>{{ md }}</th>
-                      {% endfor %}
-                    </tr>
-                    <tr>
-                      {% for md in month_day_list %} 
-                      <td><input value="" readonly name="wk_hrs_list" class="wk_hrs"></td>
-                      {% endfor %}
-                    </tr> 
-                    <tr>
-                      {% for md in month_day_list %}
-                      <td><input value="" readonly name="pto_hrs_list" class="pto_hrs"></td>
-                      {% endfor %}
-                    </tr>
-                </table>
+      <div>
+        <form action="{% url 'timesheetApp:pto-summary' %}" method="POST" id="review-form">
+          {% csrf_token %}
+        <table name="">
+          <tr name="line_items">
+            <th>Date</th>
+            {% for wd in weekday_list %}
+            <th>{{wd}}</th>
+            {% endfor %}
+            <th>&nbsp;</th>
+            <th></th>
+          </tr>
+          <tr name="line_items">
+            <th>Category</th>
+            {% for md in month_day_list %}
+            <th>{{md}}</th>
+            {% endfor %}
+            <th>&nbsp;</th>
+            <th>Total Hours</th>
+          </tr>
+          <tr name="line_items">
+            <td>Work</td>
+            {% for md in month_day_list %}
+            <td><input value="" name="wk_hrs_list" class="wk_hrs" readonly></td>
+            {% endfor %}    
+            <td>&nbsp;</td>
+            <td><input type="number" name="" value="" class="tot_wk_hrs" readonly></td>
+          </tr>
+          <tr name="line_items">
+            <td>PTO</td>
+            {% for md in month_day_list %}
+            <td><input value="" name="pto_hrs_list" class="pto_hrs" readonly></td>
+            {% endfor %}  
+            <td>&nbsp;</td>
+            <td><input type="number" name="" value="" class="tot_pto_hrs" readonly></td>
+          <tr>
+            <td colspan="7">&nbsp;</td>
+            <td>Subtotal</td>
+            <td>&nbsp;</td>
+            <td><input type="number" name="subtotal" value="" class="" step="0.25" readonly></td>
+          </tr>
+          <tr>
+            <td colspan="7">&nbsp;</td>
+            <td>
+              Tax:
+              <select name="tax">
+                <option value=".06">CT Tax</option>
+                <option value=".00">Tax Free</option>
+              </select>
+            </td>
+            <td>&nbsp;</td>
+            <td><input type="text" name="tax_total" value="" jAutoCalc="{sub_total} * {tax}"></td>
+          </tr>
+          <tr>
+            <td colspan="7">&nbsp;</td>
+            <td>Total</td>
+            <td>&nbsp;</td>
+            <td><input type="text" name="grand_total" value="" jAutoCalc="{sub_total} + {tax_total}"></td>
+          </tr>
+        </table>
 
-              <div>
-                <!-- <h4>Total Hours Worked: {{tot_wk_hrs}}</h4> -->
-                <h4>Total Hours Worked: <p class="tot_wk_hrs"></p></h4> 
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Edit</button>
+                <input type="submit" class="btn btn-primary">
               </div>
-              <br>
-              <div>
-                <!-- <h4>Total Hours PTO: {{tot_pto_hrs}}</h4> -->
-                <h4>Total Hours PTO: <p class="tot_pto_hrs"></p></h4> 
-              </div> 
             </form>
-        
-      </div>
+          </div>
 
-
-
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Edit</button>
-        <button type="button" class="btn btn-primary">Submit Timesheet</button>
-      </div>
     </div>
+  
+  
   </div>
 </div>
 
@@ -163,30 +186,31 @@
 
 
 
-  <script>
+
+<script>
+  
+  var wk_hrs = []
+  var pto_hrs = []
+
+  //onclick for modal to display inputs
+  function display_inputs(wk_hrs, pto_hrs){
+    //serialize a collection of objs
+    wk_hrs = $('input[name ="hrs_worked"]').serializeArray();
+    pto_hrs = $('input[name ="hrs_pto"]').serializeArray();
     
-    var wk_hrs = []
-    var pto_hrs = []
+    //display list of obj.values to a list of input tags
+    var i = 0;
+    $('input[class ="wk_hrs"]').empty();
+    $.each( $('input[class ="wk_hrs"]'), function(idx, item){
+        $(this).attr('value', wk_hrs[i++].value)
+      });  
+    var j = 0;
+    $('input[class ="pto_hrs"]').empty();
+    $.each( $('input[class ="pto_hrs"]'), function(idx, item){
+        $(this).attr('value', pto_hrs[j++].value)
+      });  
 
-    //onclick for modal to display inputs
-    function display_inputs(wk_hrs, pto_hrs){
-      //serialize a collection of objs
-      wk_hrs = $('input[name ="hrs_worked"]').serializeArray();
-      pto_hrs = $('input[name ="hrs_pto"]').serializeArray();
-      
-      //display list of obj.values to a list of input tags
-      var i = 0;
-      $('input[class ="wk_hrs"]').empty();
-      $.each( $('input[class ="wk_hrs"]'), function(idx, item){
-          $(this).attr('value', wk_hrs[i++].value)
-        });  
-      var j = 0;
-      $('input[class ="pto_hrs"]').empty();
-      $.each( $('input[class ="pto_hrs"]'), function(idx, item){
-          $(this).attr('value', pto_hrs[j++].value)
-        });  
-
-    }
+  }
 
 
   function calcTot(selectors) {
@@ -198,19 +222,26 @@
     return total
   };
 
+  var tot_wk_hrs = 0
+  var tot_pto_hrs = 0
   //calc total wk hrs at input
-  $('input[class ="enter_wk"]').keyup(function () {
-      total = calcTot('input[class ="enter_wk"]')
-      $('.tot_wk_hrs').text(total)
+  $('input[class ="enter_wk"]').on('click keyup', function () {
+    tot_wk_hrs = calcTot('input[class ="enter_wk"]')
+    $('.tot_wk_hrs').val(tot_wk_hrs)
+    updateSubtot(tot_wk_hrs, tot_pto_hrs)
     });
-
   //calc total pto hrs at input
-  $('input[class ="enter_pto"]').keyup(function () {
-    total = calcTot('input[class ="enter_pto"]')
-    $('.tot_pto_hrs').text(total)
+  $('input[class ="enter_pto"]').on('click keyup',function () {
+    tot_pto_hrs = calcTot('input[class ="enter_pto"]')
+    $('.tot_pto_hrs').val(tot_pto_hrs)
+    updateSubtot(tot_wk_hrs, tot_pto_hrs)
   });
 
-
+  //calc total wk + pto hrs at input
+  function updateSubtot(tot_wk_hrs, tot_pto_hrs){
+    var total = tot_wk_hrs + tot_pto_hrs 
+    $('input[name ="subtotal"]').val(total)
+  }
 
 
   //run at page load: 
@@ -219,21 +250,6 @@
     $("#datepicker").datepicker();
         
   });
-
-
-    
-    // //is actually a collections - not array or list
-    // var list_hrs_wk = []
-    // var list_hrs_pto = []
-    // //get input data from form into vars
-    // $('#hrs-form').submit(function(e) {
-    //   e.preventDefault(); // stop the submission
-    //   list_hrs_wk = $('input[name ="hrs_worked"]');
-    //   list_hrs_pto = $('input[name ="hrs_pto"]');
-    //   //display_inputs(list_hrs_wk);
-    // });
-
-  </script>
-
+</script>
 </body>
 </html>
